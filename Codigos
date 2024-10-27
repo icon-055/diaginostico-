@@ -4,12 +4,24 @@ import pandas as pd
 import numpy as np
 
 def load_model():
-    with open('modelo.sav', 'rb') as file:
-        model = pickle.load(file)
-    return model
+    try:
+        with open('trained_model.sav', 'rb') as file:
+            model = pickle.load(file)
+        return model
+    except Exception as e:
+        st.error(f"Erro ao carregar o modelo: {e}")
+
+def load_data():
+    try:
+        dados = pd.read_csv('dados.csv')  # ou 'diabetes.csv' se esse for o nome
+        return dados
+    except Exception as e:
+        st.error(f"Erro ao carregar os dados: {e}")
 
 def main():
     model = load_model()
+    dados = load_data()  # Se você precisar dos dados em seu aplicativo
+
     st.title("Predição de Diabetes")
 
     # Campos de entrada para o usuário
